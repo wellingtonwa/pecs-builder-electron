@@ -2,7 +2,7 @@
   "name": "pecs-electron",
   "productName": "pecs-electron",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Pecs Image Maker",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -14,7 +14,7 @@
   "keywords": [],
   "author": {
     "name": "Wellington Wagner",
-    "email": "wellington@projetusti.com.br"
+    "email": "wellingtonwa@gmail.com"
   },
   "license": "MIT",
   "devDependencies": {

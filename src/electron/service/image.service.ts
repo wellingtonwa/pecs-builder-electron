@@ -113,7 +113,7 @@ class ImageService {
 
   async getFontOrDefault(font: string = "FONT_SANS_32_BLACK"): Promise<any>{
     try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // @ts-ignore
         return await Jimp.loadFont(Jimp[font]);
     } catch (error) {
         console.error(`Font ${font} not available. Using default font ${Jimp.FONT_SANS_32_BLACK}`);
@@ -121,6 +121,10 @@ class ImageService {
     }
   };
 
+  async jimpFromBase64(base64: string): Promise<Jimp> {
+    // Read image type supported by jimp
+    return Jimp.read(Buffer.from(base64.replace(REGEX_TIPO_IMAGEM, ''), 'base64'));
+  }
 }
 
 export default new ImageService();
