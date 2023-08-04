@@ -34,6 +34,7 @@ const config: ForgeConfig = {
           },
         ],
       },
+      "port": 5002
     }),
   ],
 };

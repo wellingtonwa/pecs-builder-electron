@@ -28,7 +28,7 @@ const router = createHashRouter([
 const App: FC = () => {
     return (
       <Provider store={store}>
-        <MantineProvider>
+          <MantineProvider withCSSVariables withGlobalStyles theme={{ colorScheme: 'dark' }}>
           <RouterProvider router={router}/>
         </MantineProvider>
       </Provider>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { GlobalState, globalActions } from "../store/slice/global.slice";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Center} from "@mantine/core";
+import { Button, Card, Center, Group} from "@mantine/core";
 
 const Preview: FC = () => {
   const { currentPicture } = useSelector<RootState, GlobalState>(state => state.global)
@@ -34,15 +34,17 @@ const Preview: FC = () => {
             <img src={currentPicture?.base64} alt=""/>
           </Center>
         </Card.Section>
-        <Button size="sm" color="green" onClick={salvarFunction }>
-          Salvar
-        </Button>
-        <Button size='sm' color='gray' onClick={() => navigate('/')}>
-          Ajustar dados
-        </Button>
-        <Button size='sm' mr={'md'} color='gray' onClick={okFunction}>
-          Adicionar outra imagem
-        </Button>
+        <Group mt="md" position="apart">
+            <Button size="sm" color="green" onClick={salvarFunction }>
+              Salvar
+            </Button>
+            <Button size='sm' color='gray' onClick={() => navigate('/')}>
+              Ajustar dados
+            </Button>
+            <Button size='sm' mr={'md'} color='gray' onClick={okFunction}>
+              Adicionar outra imagem
+            </Button>
+        </Group>
       </Card>
     </>
   )

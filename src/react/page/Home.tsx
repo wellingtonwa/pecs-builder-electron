@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Center, Paper, Space, TextInput, Group, Switch, FileInput, Select, ColorPicker } from "@mantine/core";
+import { Button, Card, Center, Space, TextInput, Group, Switch, FileInput, Select, ColorPicker } from "@mantine/core";
 import { GlobalState, globalActions } from '../../react/store/slice/global.slice';
 import { RootState } from '../../react/store';
 import { useDispatch, useSelector } from "react-redux";
@@ -41,43 +41,42 @@ const Home: FC = () => {
     }
     return (
         <>
-          <Paper sx={{ maxWidth: 300 }} mx="auto" mt={'xl'}>
-          <form onSubmit={form.onSubmit(submitFunction)}>
-          <TextInput
-            withAsterisk
-            label="Texto"
-            {...form.getInputProps('text')}
-          />
+          <Card mx="auto" mt={'md'}>
+            <form onSubmit={form.onSubmit(submitFunction)}>
+              <TextInput
+                withAsterisk
+                label="Texto"
+                {...form.getInputProps('text')}
+              />
 
-          {currentPicture === null && <FileInput 
-            placeholder='imagem'
-            label="Imagem:"
-            accept='image/png,image/jpeg,image/webp'
-            withAsterisk
-            {...form.getInputProps('imageFile')}
-          />}
-            
-          <Select
-              data={FONTS.map((obj: FontProps) => ({ value: obj.value, label: obj.description, key: obj.value}))}
-              label='Fonte:'
-              {...form.getInputProps('font')}
-          />
+              {currentPicture === null && <FileInput 
+                placeholder='imagem'
+                label="Imagem:"
+                accept='image/png,image/jpeg,image/webp'
+                withAsterisk
+                {...form.getInputProps('imageFile')}
+              />}
+                
+              <Select
+                  data={FONTS.map((obj: FontProps) => ({ value: obj.value, label: obj.description, key: obj.value}))}
+                  label='Fonte:'
+                  {...form.getInputProps('font')}
+              />
 
-          <Switch
-            checked={form.values.withBorder}
-            {...form.getInputProps('withBorder')} mt="md"
-            label="Adicionar Borda"/>
+              <Switch
+                checked={form.values.withBorder}
+                {...form.getInputProps('withBorder')} mt="md"
+                label="Adicionar Borda"/>
 
-            <ColorPicker format="hexa"
-                         {...form.getInputProps('backgroundColor')} mt="md"/>
-            
-          <Group position="right" mt="md">
-            {pictures.length > 0 && <Button onClick={() => console.log("nada")}>Galeria ({pictures.length})</Button>}
-            <Button type="submit">Enviar</Button>
-          </Group>
-          <Space h="md"/>
-        </form>
-        </Paper>
+                <ColorPicker format="hexa"
+                             {...form.getInputProps('backgroundColor')} mt="md"/>
+                
+              <Group mt="md">
+                {pictures.length > 0 && <Button onClick={() => console.log("nada")}>Galeria ({pictures.length})</Button>}
+                <Button type="submit">Enviar</Button>
+              </Group>
+            </form>
+          </Card>
         </>
     )
 

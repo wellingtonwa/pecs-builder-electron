@@ -13,7 +13,7 @@ class WindowService {
         if (!this.mainWindow || this.mainWindow.isDestroyed()) {
           this.mainWindow = new BrowserWindow({
             height: 605,
-            width: 740,
+            width: 540,
             autoHideMenuBar: true,
             webPreferences: {
                 preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
