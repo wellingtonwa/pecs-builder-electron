@@ -9,7 +9,6 @@ const api: {
   [controller: string]: ControllerFunctions;
 } = {};
 
-console.log(">>>>>>>>>>", ipcRenderer.sendSync('getControllerActions'))
 
 ipcRenderer.sendSync('getControllerActions').forEach((controller: ActionController) => {
   api[controller.key] = controller.methods.reduce((object: ControllerFunctions, it: string) => {
