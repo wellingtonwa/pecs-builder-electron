@@ -41,6 +41,14 @@ export interface AddTitleProps {
   backgroundColor?: string
 }
 
+export interface CreateImageTextProps {
+  text: string;
+  font?: any;
+  backgroundColor?: string | number;
+  x?: number;
+  y?: number;
+}
+
 function horizontalLine (x:any, y:any, offset:any) {
   this.bitmap.data.writeUInt32BE(BORDER_COLOR, offset, true)
 };
@@ -86,20 +94,44 @@ class ImageService {
   async addTitle(props: AddTitleProps): Promise<Jimp> {
     const DEFAULT_FONT = await this.getFontOrDefault(props.font);
     let firstPixelColor =  props.backgroundColor || props.image.getPixelColor(0,0);
-    let imageText = new Jimp(DEFAULT_WIDTH, DEFAULT_HEIGHT + DEFAULT_TEXT_HEIGHT, firstPixelColor);
-    imageText.print(DEFAULT_FONT,
-        0, 
-        0, 
-        {
-            text: props.text,
-            alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-            alignmentY: Jimp.VERTICAL_ALIGN_TOP
-        }, 
-        DEFAULT_WIDTH, 
-        DEFAULT_HEIGHT
-    );
-    imageText.blit(props.image, 0, DEFAULT_TEXT_HEIGHT);
-    return imageText; 
+    let palavras = props.text.split('\n');
+    if (palavras.length > 1) {
+      const promisesTexto = palavras.map((it: string, idx: number) => this.getImageText({font: DEFAULT_FONT, x: 0, y: (idx * 40), text: it, backgroundColor: firstPixelColor}));
+      const imagensTexto = await Promise.all(promisesTexto);
+      let primeiraFrase = imagensTexto.pop();
+      primeiraFrase = primeiraFrase.blit(props.image, 0, 40);
+      primeiraFrase = imagensTexto.pop().blit(primeiraFrase, 0, 35);
+      // let promisesBlit = imagensTexto.map((it: Jimp, idx: number) => primeiraFrase = it.blit(primeiraFrase, 0, (idx+1)*20));
+      // await Promise.all(promisesBlit);
+      return primeiraFrase;
+    } else {
+      let imageText = new Jimp(DEFAULT_WIDTH, DEFAULT_HEIGHT + DEFAULT_TEXT_HEIGHT, firstPixelColor);
+      imageText.print(DEFAULT_FONT,
+            0, 
+            0, 
+            {
+                text: props.text,
+                alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+                alignmentY: Jimp.VERTICAL_ALIGN_TOP
+            }, 
+            DEFAULT_WIDTH, 
+            DEFAULT_HEIGHT,
+        );
+      return imageText.blit(props.image, 0, DEFAULT_TEXT_HEIGHT);
+    }     
+  }
+
+  async getImageText(props: CreateImageTextProps): Promise<Jimp> {
+    let imageText = new Jimp(DEFAULT_WIDTH, DEFAULT_HEIGHT + DEFAULT_TEXT_HEIGHT, props.backgroundColor);
+    imageText.print(
+      props.font,
+      0,
+      0,
+      { text: props.text, alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER, alignmentY: Jimp.VERTICAL_ALIGN_TOP },
+      DEFAULT_WIDTH,
+      DEFAULT_HEIGHT
+    )
+    return imageText;
   }
 
 

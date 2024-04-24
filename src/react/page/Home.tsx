@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Card, Center, Space, TextInput, Group, Switch, FileInput, Select, ColorPicker } from "@mantine/core";
+import { Button, Card, Center, Space, TextInput, Group, Switch, FileInput, Select, ColorPicker, Textarea } from "@mantine/core";
 import { GlobalState, globalActions } from '../../react/store/slice/global.slice';
 import { RootState } from '../../react/store';
 import { useDispatch, useSelector } from "react-redux";
@@ -43,7 +43,7 @@ const Home: FC = () => {
         <>
           <Card mx="auto" mt={'md'}>
             <form onSubmit={form.onSubmit(submitFunction)}>
-              <TextInput
+              <Textarea
                 withAsterisk
                 label="Texto"
                 {...form.getInputProps('text')}

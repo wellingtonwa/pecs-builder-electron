@@ -11,7 +11,7 @@ class ImageController {
   }
 
   async salvarImagem(params: Picture) {
-    let result = await fileManagerController.openSaveFileDialog("Salvar", params.title.replace('[^a-zA-Z0-9]', '')+'.png');
+    let result = await fileManagerController.openSaveFileDialog("Salvar", params.title.replace(/(\W|\n|\r\n)/gm, '-')+'.png');
     result = result.replace(/(\.+png)+$/g, '.png');
 
     if (result !== null) {
