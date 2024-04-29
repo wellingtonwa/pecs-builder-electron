@@ -50,7 +50,6 @@ const Home: FC = () => {
               />
 
               {currentPicture === null && <FileInput 
-                placeholder='imagem'
                 label="Imagem:"
                 accept='image/png,image/jpeg,image/webp'
                 withAsterisk
